@@ -1,5 +1,6 @@
 package com.example.recyclerview.model
 
+import com.example.recyclerview.UserNotFoundException
 import com.github.javafaker.Faker
 import java.util.*
 
@@ -25,6 +26,16 @@ class UserService {
                 photo = IMAGES[it % IMAGES.size]
             )
         }.toMutableList()
+    }
+
+    //Найти по ID
+    fun getById(id: Long): UserDetails {
+        val user = users.firstOrNull { it.id == id }
+            ?: throw UserNotFoundException()
+        return UserDetails(
+            user = user,
+            details =Faker.instance().lorem().paragraphs(3).joinToString("\n\n")
+        )
     }
 
     //получить список пользователей
